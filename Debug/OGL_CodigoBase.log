@@ -1,28 +1,16 @@
-<<<<<<< HEAD
-﻿Build started 07/06/2016 10:10:36 p.m..
-     1>Project "C:\Users\Reivaj Gómez\Desktop\GH\openglEscenary\OGL_CodigoBase.vcxproj" on node 2 (Build target(s)).
+﻿Build started 08/06/2016 05:24:31 p. m..
+     1>Project "C:\Users\infor_000\Documents\GitHub\openglEscenary\OGL_CodigoBase.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ILibrerias /ZI /nologo /W0 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Main.cpp
          Main.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Reivaj Gómez\Desktop\GH\openglEscenary\Debug\OGL_CodigoBase.exe" /INCREMENTAL /NOLOGO /LIBPATH:Librerias opengl32.lib glu32.lib glaux.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Reivaj Gómez\Desktop\GH\openglEscenary\Debug\OGL_CodigoBase.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Reivaj Gómez\Desktop\GH\openglEscenary\Debug\OGL_CodigoBase.lib" /MACHINE:X86 /SAFESEH Debug\3ds.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\infor_000\Documents\GitHub\openglEscenary\Debug\OGL_CodigoBase.exe" /INCREMENTAL /NOLOGO /LIBPATH:Librerias opengl32.lib glu32.lib glaux.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\infor_000\Documents\GitHub\openglEscenary\Debug\OGL_CodigoBase.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\infor_000\Documents\GitHub\openglEscenary\Debug\OGL_CodigoBase.lib" /MACHINE:X86 /SAFESEH Debug\3ds.obj
          Debug\cargadorTGA.obj
          Debug\Main.obj
          Debug\Vector.obj
-         OGL_CodigoBase.vcxproj -> C:\Users\Reivaj Gómez\Desktop\GH\openglEscenary\Debug\OGL_CodigoBase.exe
-     1>Done Building Project "C:\Users\Reivaj Gómez\Desktop\GH\openglEscenary\OGL_CodigoBase.vcxproj" (Build target(s)).
-=======
-﻿Compilación iniciada a las 07/06/2016 09:36:36 p.m..
-     1>Proyecto "C:\Users\Comp\Downloads\Repo\openglEscenary\OGL_CodigoBase.vcxproj" en el nodo 2 (Build destinos).
-       El archivo del proyecto contiene ToolsVersion="12.0". Este conjunto de herramientas falta o es desconocido. Es posible que pueda resolver este problema instalando la versión de .NET Framework adecuada para dicho conjunto. Se tratará el proyecto como si contuviera ToolsVersion="4.0".
-     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\Microsoft.Cpp.Platform.targets(44,5): error MSB8020: The builds tools for v120 (Platform Toolset = 'v120') cannot be found. To build using the v120 build tools, either click the Project menu or right-click the solution, and then select "Update VC++ Projects...". Install v120 to build using the v120 build tools.
-     1>Compilación del proyecto terminada "C:\Users\Comp\Downloads\Repo\openglEscenary\OGL_CodigoBase.vcxproj" (Build destinos) -- ERROR.
->>>>>>> origin/master
+         OGL_CodigoBase.vcxproj -> C:\Users\infor_000\Documents\GitHub\openglEscenary\Debug\OGL_CodigoBase.exe
+     1>Done Building Project "C:\Users\infor_000\Documents\GitHub\openglEscenary\OGL_CodigoBase.vcxproj" (Build target(s)).
 
-ERROR al compilar.
+Build succeeded.
 
-<<<<<<< HEAD
-Time Elapsed 00:00:01.29
-=======
-Tiempo transcurrido 00:00:00.43
->>>>>>> origin/master
+Time Elapsed 00:00:01.20

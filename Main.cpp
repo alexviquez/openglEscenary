@@ -2535,6 +2535,9 @@ void bloque(float x, float y, float z, float margen, int tipo)
 {
 	/*------------------------------------------------- BORDES FRONTAL-----------------------------------------------------*/
 	margen = margen / 2.95;
+	x *= 10;
+	y *= 10;
+	z *= 10;
 	glPushMatrix();
 		if (tipo == 1){}
 		else if (tipo == 2){
@@ -2553,7 +2556,7 @@ void bloque(float x, float y, float z, float margen, int tipo)
 		vec1 = CVector(10.0f - margen, 10.0f - margen,  + margen) - CVector(0.0f + margen, 10.0f - margen,  + margen);
 		vec2 = CVector(10.0f, 10.0f, 0) - CVector(0.0f + margen, 10.0f - margen, 0);
 		N = Normaliza(Cruz(vec1, vec2));
-
+		
 		glBegin(GL_QUADS);
 			glNormal3f(N.x, N.y, N.z);
 			glVertex3f(0.0f+margen+x, 10.0f-margen+y,  + margen+z);
@@ -2585,6 +2588,15 @@ void bloque(float x, float y, float z, float margen, int tipo)
 			glVertex3f(10.0f+x, 0.0f+y, +z);
 			glVertex3f(10.0f+x, 10.0f+y, +z);
 		glEnd();
+		
+		/*
+		glBegin(GL_QUADS);
+			glNormal3f(N.x, N.y, N.z);
+			glVertex3f(0.0f,0.0f,0.0f);
+			glVertex3f(0.0f, 0.0f, 0.0f);         
+			glVertex3f(0.0f, 0.0f, 0.0f);
+			glVertex3f(0.0f, 0.0f, 0.0f);
+		glEnd();
 		*/
 		vec1 = CVector(0.0f, 0.0f, 0) - CVector(0.0f + margen, 0.0f + margen,  + margen);
 		vec2 = CVector(10.0f, 0.0f, 0) - CVector(10.0f + margen, 0.0f + margen,  + margen);
@@ -2597,7 +2609,6 @@ void bloque(float x, float y, float z, float margen, int tipo)
 			glVertex3f(10.0f - margen+x, 0.0f + margen+y,  + margen+z);
 			glVertex3f(0.0f + margen+x, 0.0f + margen+y,  + margen+z);
 		glEnd();
-
 		/*--------------------------------------------------------------------------------------------------------------*/
 
 		/*--------------------------------------------------FRONTAL-----------------------------------------------------*/
@@ -2688,29 +2699,95 @@ void bloque(float x, float y, float z, float margen, int tipo)
 		glEnd();
 	glPopMatrix();
 }
+void estructura(int tipo, int px, int py, int pz){
+	if (tipo == 1){
+		bloque(px, py, pz, 1.2, 4);
+		bloque(px+1, py+1, pz, 0.8, 1);
+		bloque(px + 1, py, pz, 1.8, 3);
+		bloque(px + 2, py + 1, pz, 1.0, 3);
+		bloque(px + 3, py, pz, 1.5,  1);
+	}
 
+	else if (tipo == 2){
+		bloque(px, py, pz, 1.2, 1);
+		bloque(px + 1, py, pz, 0.8, 1);
+		bloque(px, py + 1, pz, 0.8, 2);
+	}
+}
 void dibujaEscenario()
 {
+	int i,j; // Contadores para creación de fondos
 
-	//FONDO PARTE 1
-
+	//***********************************************ESCENARIO PARTE 1*********************************************************
 	bloque(0, 0, 0, 1, 1);
-	bloque(10, 0, 0, 1, 1);
-	bloque(20, -10, 0, 1, 1);
-	bloque(30, -10, 0, 1, 1);
-	bloque(20, 0, 0, 0.5, 3);
-	bloque(0, 30, 0, 0.5, 2);
-	bloque(20, 30, 0, 0.5, 1);
-	bloque(20, 40, 0, 0.5, 1);
-	bloque(30, 30, 0, 0.5, 2);
-	bloque(40, -10, 0, 0.6, 4);
+	bloque(1, 0, 0, 1, 1);
+	bloque(2, -1, 0, 1, 1);
+	bloque(3, -1, 0, 1, 1);
+	bloque(2, 0, 0, 0.5, 3);
+	bloque(0, 3, 0, 0.5, 2);
+	bloque(2, 3, 0, 0.5, 1);
+	bloque(2, 4, 0, 0.5, 1);
+	bloque(3, 3, 0, 0.5, 2);
+	bloque(4, -1, 0, 0.6, 4);
+	bloque(0, -2, 0, 0.9, 2);
+	bloque(2, -2, 0, 1, 3);
+	bloque(4, -2, 0, 0.5, 1);
 
-	for (int i = 1; i < 30;i++)
-		for (int j = 1; j < 30; j++){
-			bloque(i*10-60, j*10-100, -80, 1, 1);
+	bloque(90, 10, 0, 0.5, 1);  // Bloque solito
+
+	for (i = 0; i < 2; i++){
+		estructura(1, 14+4*i, 4, 0);
+	}
+
+	for (i = 0; i < 14; i++){
+			bloque(i * 1, 5, 0, 1, 1);
+	}
+
+	bloque(14, 3, 0, 0.6, 1);
+	bloque(14, 2, 0, 0.9, 1);
+	bloque(14, 1, 0, 1, 1);
+	bloque(15, 2, 0, 1.9, 2);
+	bloque(15, 1, 0, 1.3, 3);
+	bloque(17, 1, 0, 1.3, 3);
+	for (i = 1; i < 15; i++){
+		bloque(i * 2 - 7, 2, -7.7, 1, 2);
+	}
+	bloque(22, 4, 0, 1.6, 2);
+	
+	for (i = 0; i < 4; i++){                  //
+		bloque(i * 3 + 5, -2, 0, 0.8, 1);     //
+		bloque(i * 3 + 6, -2, 0, 2, 3);	      //
+	}										  // Primera división
+	bloque(17, -2, 0, 2, 1);				  //
+	estructura(1, 18, -3, 0);				  //
+
+
+
+	//********************************************ESCENARIO PARTE 2*********************************************************
+
+	estructura(2, 6, -5, 0);
+	estructura(2, 16, -5, 0);
+
+	for (i = 1; i < 4; i++){
+		bloque(i * 2 - 7, 2, -7.7, 1, 2);
+	}
+
+	for (i = 0; i < 4; i++){                  //
+		estructura(1, 5 + i * 4, -11, 0);	  //
+	}										  // Segunda división
+	bloque(21, -11, 0, 3, 2);
+	bloque(23, -10, 0, 1, 1);
+	bloque(23, -11, 0, 1.4, 1);
+	//*********************************FONDO ESCENARIO PRIMERA PARTE***********************************
+	for (i = 1; i < 30; i++){
+		for (j = 1; j < 30; j++){
+			bloque(i * 1 - 6, j * 1 - 10, -8, 1, 1);
 		}
+	}
 
+	
 
+	//**************************************************************************************************
 	//PARTE 1
 	//bloque(0, 0, 0, 3, 4, 4);
 	//bloque(0, 0, 0, 3, 1, 4);
@@ -6378,7 +6455,7 @@ int RenderizaEscena(GLvoid)								// Aqui se dibuja todo lo que aparecera en la
 	//gluLookAt(camara.x+10, camara.y+10, camara.z, camara.x+10, camara.y+10, 0.0f, 0, 1, 0);
 	gluLookAt(player1.PosicionObj.x+110, player1.PosicionObj.y - 5.7f+20, camara.z, player1.PosicionObj.x+110, player1.PosicionObj.y - 5.7f+20, 0.0f, 0, 1, 0);
 	actualizaLuzParam();
-	DibujaEjes();
+	//DibujaEjes();
 	//bloque(10, 0, 0, 3, 2, 4);
 	dibujaEscenario();
     //glTranslatef(12.0f+cx, 14.5f, 0.0f);
