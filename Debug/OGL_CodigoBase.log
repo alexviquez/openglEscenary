@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿Build started 07/06/2016 10:10:36 p.m..
      1>Project "C:\Users\Reivaj Gómez\Desktop\GH\openglEscenary\OGL_CodigoBase.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
@@ -10,7 +11,18 @@
          Debug\Vector.obj
          OGL_CodigoBase.vcxproj -> C:\Users\Reivaj Gómez\Desktop\GH\openglEscenary\Debug\OGL_CodigoBase.exe
      1>Done Building Project "C:\Users\Reivaj Gómez\Desktop\GH\openglEscenary\OGL_CodigoBase.vcxproj" (Build target(s)).
+=======
+﻿Compilación iniciada a las 07/06/2016 09:36:36 p.m..
+     1>Proyecto "C:\Users\Comp\Downloads\Repo\openglEscenary\OGL_CodigoBase.vcxproj" en el nodo 2 (Build destinos).
+       El archivo del proyecto contiene ToolsVersion="12.0". Este conjunto de herramientas falta o es desconocido. Es posible que pueda resolver este problema instalando la versión de .NET Framework adecuada para dicho conjunto. Se tratará el proyecto como si contuviera ToolsVersion="4.0".
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\Microsoft.Cpp.Platform.targets(44,5): error MSB8020: The builds tools for v120 (Platform Toolset = 'v120') cannot be found. To build using the v120 build tools, either click the Project menu or right-click the solution, and then select "Update VC++ Projects...". Install v120 to build using the v120 build tools.
+     1>Compilación del proyecto terminada "C:\Users\Comp\Downloads\Repo\openglEscenary\OGL_CodigoBase.vcxproj" (Build destinos) -- ERROR.
+>>>>>>> origin/master
 
-Build succeeded.
+ERROR al compilar.
 
+<<<<<<< HEAD
 Time Elapsed 00:00:01.29
+=======
+Tiempo transcurrido 00:00:00.43
+>>>>>>> origin/master
