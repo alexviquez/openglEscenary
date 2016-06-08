@@ -118,7 +118,7 @@ float p3;	//Posición en Z del bloque
 float p4;	//Coeficiente que indica el tamaño del margen de los bordes
 float p5;	//Posición en X del punto de la cara frontal
 float p6;	//Posición en Y del punto de la cara frontal
-float p7;	//Tamaño del bloque    1: Chico, 2: Grande
+int p7;	//Tamaño del bloque    1: Chico, 2: Grande 3:Alargado horizontal 4:Alargado vertical
 
 FILE *archivo;
 //*************************************************************************
@@ -2393,137 +2393,162 @@ void dibujaFondo()
 	
 }
 
-void bloque(float x, float y, float z, float margen, float px, float py, float pz)
+void bloque(float x, float y, float z, float margen, int tipo)
 {
 	/*------------------------------------------------- BORDES FRONTAL-----------------------------------------------------*/
 	margen = margen / 2.95;
-	vec1 = CVector(10.0f - margen, 10.0f - margen, -15.0f + margen) - CVector(0.0f + margen, 10.0f - margen, -15.0f + margen);
-	vec2 = CVector(10.0f, 10.0f, -15.0f) - CVector(0.0f + margen, 10.0f - margen, -15.0f);
-	N = Normaliza(Cruz(vec1, vec2));
+	glPushMatrix();
+		if (tipo == 1){}
+		else if (tipo == 2){
+			glScalef(2.0, 2.0, 1.0);
+			x /= 2;
+			y /= 2;
+		}
+		else if (tipo == 3){
+			glScalef(2.0, 1.0, 1.0);
+			x /= 2;
+		}
+		else if (tipo == 4){
+			glScalef(1.0, 2.0, 1.0);
+			y /= 2;
+		}
+		vec1 = CVector(10.0f - margen, 10.0f - margen,  + margen) - CVector(0.0f + margen, 10.0f - margen,  + margen);
+		vec2 = CVector(10.0f, 10.0f, 0) - CVector(0.0f + margen, 10.0f - margen, 0);
+		N = Normaliza(Cruz(vec1, vec2));
 
-	glBegin(GL_QUADS);
-		glNormal3f(N.x, N.y, N.z);
-		glVertex3f(0.0f+margen+x, 10.0f-margen+y, -15.0f + margen+z);
-		glVertex3f(10.0f - margen+x, 10.0f - margen+y, -15.0f + margen+z);
-		glVertex3f(10.0f+x, 10.0f+y, -15.0f+z);									 //BORDECITO SUPERIOR
-		glVertex3f(0.0f+x, 10.0f+y, -15.0f+z);
-	glEnd();
+		glBegin(GL_QUADS);
+			glNormal3f(N.x, N.y, N.z);
+			glVertex3f(0.0f+margen+x, 10.0f-margen+y,  + margen+z);
+			glVertex3f(10.0f - margen+x, 10.0f - margen+y,  + margen+z);
+			glVertex3f(10.0f+x, 10.0f+y, +z);									 //BORDECITO SUPERIOR
+			glVertex3f(0.0f+x, 10.0f+y, +z);
+		glEnd();
 	
-	vec1 = CVector(0.0f + margen, 10.0f - margen, -15.0f + margen) - CVector(0.0f, 10.0f, -15.0f);
-	vec2 = CVector(0.0f + margen, 0.0f + margen, -15.0f + margen) - CVector(0.0f, 0.0f, -15.0f);
-	N = Normaliza(Cruz(vec1, vec2));
+		vec1 = CVector(0.0f + margen, 10.0f - margen,  + margen) - CVector(0.0f, 10.0f, 0);
+		vec2 = CVector(0.0f + margen, 0.0f + margen,  + margen) - CVector(0.0f, 0.0f, 0 );
+		N = Normaliza(Cruz(vec1, vec2));
 	
-	glBegin(GL_QUADS);
-		glNormal3f(N.x, N.y, N.z);
-		glVertex3f(0.0f + margen+x, 10.0f - margen+y, -15.0f + margen+z);
-		glVertex3f(0.0f+x, 10.0f+y, -15.0f+z);									//BORDECITO LATERAL IZQUIERDO
-		glVertex3f(0.0f+x, 0.0f+y, -15.0f+z);
-		glVertex3f(0.0f + margen+x, 0.0f+margen +y, -15.0f + margen+z);
-	glEnd();
+		glBegin(GL_QUADS);
+			glNormal3f(N.x, N.y, N.z);
+			glVertex3f(0.0f + margen+x, 10.0f - margen+y,  + margen+z);
+			glVertex3f(0.0f+x, 10.0f+y, +z);									//BORDECITO LATERAL IZQUIERDO
+			glVertex3f(0.0f+x, 0.0f+y, +z);
+			glVertex3f(0.0f + margen+x, 0.0f+margen +y,  + margen+z);
+		glEnd();
 
-	vec1 = CVector(10.0f, 0.0f, -15.0f) - CVector(10.0f - margen, 0.0f + margen, -15.0f + margen);
-	vec2 = CVector(10.0f, 10.0f, -15.0f) - CVector(10.0f - margen, 0.0f + margen, -15.0f + margen);
-	N = Normaliza(Cruz(vec1, vec2));
+		vec1 = CVector(10.0f, 0.0f, 0) - CVector(10.0f - margen, 0.0f + margen,  + margen);
+		vec2 = CVector(10.0f, 10.0f, 0) - CVector(10.0f - margen, 0.0f + margen,  + margen);
+		N = Normaliza(Cruz(vec1, vec2));
+		/*
+		glBegin(GL_QUADS);
+			glNormal3f(N.x, N.y, N.z);
+			glVertex3f(10.0f - margen+x, 10.0f - margen+y,  + margen);
+			glVertex3f(10.0f - margen+x, 0.0f + margen+y,  + margen);         //BORDECITO LATERAL DERECHO
+			glVertex3f(10.0f+x, 0.0f+y, +z);
+			glVertex3f(10.0f+x, 10.0f+y, +z);
+		glEnd();
+		*/
+		vec1 = CVector(0.0f, 0.0f, 0) - CVector(0.0f + margen, 0.0f + margen,  + margen);
+		vec2 = CVector(10.0f, 0.0f, 0) - CVector(10.0f + margen, 0.0f + margen,  + margen);
+		N = Normaliza(Cruz(vec1, vec2));
+
+		glBegin(GL_QUADS);
+			glNormal3f(N.x, N.y, N.z);
+			glVertex3f(0.0f+x, 0.0f+y, +z);
+			glVertex3f(10.0f+x, 0.0f+y, +z);									//BORDECITO INFERIOR
+			glVertex3f(10.0f - margen+x, 0.0f + margen+y,  + margen+z);
+			glVertex3f(0.0f + margen+x, 0.0f + margen+y,  + margen+z);
+		glEnd();
+
+		/*--------------------------------------------------------------------------------------------------------------*/
+
+		/*--------------------------------------------------FRONTAL-----------------------------------------------------*/
 	
-	glBegin(GL_QUADS);
-		glNormal3f(N.x, N.y, N.z);
-		glVertex3f(10.0f - margen+x, 10.0f - margen+y, -15.0f + margen);
-		glVertex3f(10.0f - margen+x, 0.0f + margen+y, -15.0f + margen);         //BORDECITO LATERAL DERECHO
-		glVertex3f(10.0f+x, 0.0f+y, -15.0f+z);
-		glVertex3f(10.0f+x, 10.0f+y, -15.0f+z);
-	glEnd();
+		glBegin(GL_QUADS);
+			glNormal3f(0.0f, 0.0f, 1.0f);
+			glVertex3f(0.0f+margen+x, 10.0f-margen+y, margen+z);
+			glVertex3f(0.0f+margen+x, 0.0f+margen+y, margen+z);									//BORDECITO INFERIOR
+			glVertex3f(10.0f - margen +x, 0.0f + margen+y,  margen+z);
+			glVertex3f(10.0f - margen +x, 10.0f - margen+y,  margen+z);
+		glEnd();
 
-	vec1 = CVector(0.0f, 0.0f, -15.0f) - CVector(0.0f + margen, 0.0f + margen, -15.0f + margen);
-	vec2 = CVector(10.0f, 0.0f, -15.0f) - CVector(10.0f + margen, 0.0f + margen, -15.0f + margen);
-	N = Normaliza(Cruz(vec1, vec2));
 
-	glBegin(GL_QUADS);
-		glNormal3f(N.x, N.y, N.z);
-		glVertex3f(0.0f+x, 0.0f+y, -15.0f+z);
-		glVertex3f(10.0f+x, 0.0f+y, -15.0f+z);									//BORDECITO INFERIOR
-		glVertex3f(10.0f - margen+x, 0.0f + margen+y, -15.0f + margen+z);
-		glVertex3f(0.0f + margen+x, 0.0f + margen+y, -15.0f + margen+z);
-	glEnd();
+		/*vec1 = CVector(px+x, py+y, pz+z) - CVector(0.0f + margen, 10.0f - margen,  + margen);
+		vec2 = CVector(10.0f - margen, 10.0f - margen,  + margen) - CVector(px+x, py+y, pz+z);
+		N = Normaliza(Cruz(vec1, vec2));
 
-	/*--------------------------------------------------------------------------------------------------------------*/
+		glBegin(GL_TRIANGLES);
+			glNormal3f(N.x, N.y, N.z);
+			glVertex3f(0.0f+margen+x, 10.0f-margen+y, +margen+z);	  //TRIÁNGULO SUPERIOR
+			glVertex3f(px+x, py+y, pz+z);
+			glVertex3f(10.0f-margen+x, 10.0f-margen+y, +margen+z);
+		glEnd();
 
-	/*--------------------------------------------------FRONTAL-----------------------------------------------------*/
-		
-	vec1 = CVector(px+x, py+y, pz+z) - CVector(0.0f + margen, 10.0f - margen, -15.0f + margen);
-	vec2 = CVector(10.0f - margen, 10.0f - margen, -15.0f + margen) - CVector(px+x, py+y, pz+z);
-	N = Normaliza(Cruz(vec1, vec2));
+		vec1 = CVector(px + x, py + y, pz + z) - CVector(0.0f + margen, 0.0f + margen,  + margen);
+		vec2 = CVector(0.0f + margen, 10.0f - margen,  + margen) - CVector(px + x, py + y, pz + z);
+		N = Normaliza(Cruz(vec1, vec2));
 
-	glBegin(GL_TRIANGLES);
-		glNormal3f(N.x, N.y, N.z);
-		glVertex3f(0.0f+margen+x, 10.0f-margen+y, -15.0f+margen+z);	  //TRIÁNGULO SUPERIOR
-		glVertex3f(px+x, py+y, -15+pz+z);
-		glVertex3f(10.0f-margen+x, 10.0f-margen+y, -15.0f+margen+z);
-	glEnd();
-
-	vec1 = CVector(px + x, py + y, pz + z) - CVector(0.0f + margen, 0.0f + margen, -15.0f + margen);
-	vec2 = CVector(0.0f + margen, 10.0f - margen, -15.0f + margen) - CVector(px + x, py + y, pz + z);
-	N = Normaliza(Cruz(vec1, vec2));
-
-	glBegin(GL_TRIANGLES);
-		glNormal3f(N.x, N.y, N.z);
-		glVertex3f(0.0f+margen+x, 0.0f+margen+y, -15.0f+margen+z);	  //TRIÁNGULO IZQUIERDO
-		glVertex3f(px+x, py+y, -15+pz+z);
-		glVertex3f(0.0f+margen+x, 10.0f-margen+y, -15.0f+margen+z);
-	glEnd();
+		glBegin(GL_TRIANGLES);
+			glNormal3f(N.x, N.y, N.z);
+			glVertex3f(0.0f+margen+x, 0.0f+margen+y, +margen+z);	  //TRIÁNGULO IZQUIERDO
+			glVertex3f(px+x, py+y, pz+z);
+			glVertex3f(0.0f+margen+x, 10.0f-margen+y, +margen+z);
+		glEnd();
 	
-	vec1 = CVector(10.0f - margen + x, 10.0f - margen + y, -15.0f + margen + z) - CVector(10.0f - margen + x, 0.0f + margen + y, -15.0f + margen + z);
-	vec2 = CVector(px + x, py + y, -15 + pz + z) - CVector(10.0f - margen + x, 0.0f + margen + y, -15.0f + margen + z);
-	N = Normaliza(Cruz(vec1, vec2));
+		vec1 = CVector(10.0f - margen + x, 10.0f - margen + y,  + margen + z) - CVector(10.0f - margen + x, 0.0f + margen + y,  + margen + z);
+		vec2 = CVector(px + x, py + y,  pz + z) - CVector(10.0f - margen + x, 0.0f + margen + y,  + margen + z);
+		N = Normaliza(Cruz(vec1, vec2));
 
-	glBegin(GL_TRIANGLES);
-		glNormal3f(-N.x, N.y, N.z);
-		glVertex3f(10.0f-margen+x, 0.0f+margen+y, -15.0f+margen+z);	  //TRIÁNGULO DERECHO
-		glVertex3f(10.0f-margen+x, 10.0f-margen+y, -15.0f+margen+z);
-		glVertex3f(px + x, py + y, -15 + pz + z);
-	glEnd();
+		glBegin(GL_TRIANGLES);
+			glNormal3f(-N.x, N.y, N.z);
+			glVertex3f(10.0f-margen+x, 0.0f+margen+y, +margen+z);	  //TRIÁNGULO DERECHO
+			glVertex3f(10.0f-margen+x, 10.0f-margen+y, +margen+z);
+			glVertex3f(px + x, py + y,  pz + z);
+		glEnd();
 
-	vec1 = CVector(10.0f - margen + x, 0.0f + margen + y, -15.0f + margen + z) - CVector(0.0f + margen + x, 0.0f + margen + y, -15.0f + margen + z);
-	vec2 = CVector(px + x, py + y, -15 + pz + z) - CVector(0.0f + margen + x, 0.0f + margen + y, -15.0f + margen + z);
-	N = Normaliza(Cruz(vec1, vec2));
+		vec1 = CVector(10.0f - margen + x, 0.0f + margen + y,  + margen + z) - CVector(0.0f + margen + x, 0.0f + margen + y,  + margen + z);
+		vec2 = CVector(px + x, py + y,  pz + z) - CVector(0.0f + margen + x, 0.0f + margen + y,  + margen + z);
+		N = Normaliza(Cruz(vec1, vec2));
 
-	glBegin(GL_TRIANGLES);
-		glNormal3f(-N.x, -N.y, -N.z);
-		glVertex3f(0.0f+margen+x, 0.0f+margen+y, -15.0f+margen+z);	  //TRIÁNGULO INFERIOR
-		glVertex3f(10.0f-margen+x, 0.0f+margen+y, -15.0f+margen+z);
-		glVertex3f(px + x, py + y, -15 + pz + z);
-	glEnd();
-	/*--------------------------------------------------------------------------------------------------------------*/
-	glBegin(GL_QUADS);
-		glNormal3f(1.0f, 0.0f, 0.0f);
-		glVertex3f(10.0f+x, 0.0f+y, -15.0f+z);
-		glVertex3f(10.0f+x, 0.0f+y, -25.0f+z);		 //CARA DERECHA
-		glVertex3f(10.0f+x, 10.0f+y, -25.0f+z);
-		glVertex3f(10.0f+x, 10.0f+y, -15.0f+z);
-	glEnd();
+		glBegin(GL_TRIANGLES);
+			glNormal3f(-N.x, -N.y, -N.z);
+			glVertex3f(0.0f+margen+x, 0.0f+margen+y, +margen+z);	  //TRIÁNGULO INFERIOR
+			glVertex3f(10.0f-margen+x, 0.0f+margen+y, +margen+z);
+			glVertex3f(px + x, py + y,  pz + z);
+		glEnd();
+		/*--------------------------------------------------------------------------------------------------------------*/
+		glBegin(GL_QUADS);
+			glNormal3f(1.0f, 0.0f, 0.0f);
+			glVertex3f(10.0f+x, 0.0f+y, +z);
+			glVertex3f(10.0f+x, 0.0f+y, -10.0f+z);		 //CARA DERECHA
+			glVertex3f(10.0f+x, 10.0f+y, -10.0f+z);
+			glVertex3f(10.0f+x, 10.0f+y, +z);
+		glEnd();
 	
-	glBegin(GL_QUADS);
-	    glNormal3f(-1.0f, 0.0f, 0.0f);
-		glVertex3f(0.0f+x, 10.0f+y, -15.0f+z);
-		glVertex3f(0.0f+x, 10.0f+y, -25.0f+z);		 //CARA IZQUIERDA
-		glVertex3f(0.0f+x, 0.0f+y, -25.0f+z);
-		glVertex3f(0.0f+x, 0.0f+y, -15.0f+z);
-	glEnd();
+		glBegin(GL_QUADS);
+			glNormal3f(-1.0f, 0.0f, 0.0f);
+			glVertex3f(0.0f+x, 10.0f+y, +z);
+			glVertex3f(0.0f+x, 10.0f+y, -10.0f+z);		 //CARA IZQUIERDA
+			glVertex3f(0.0f+x, 0.0f+y, -10.0f+z);
+			glVertex3f(0.0f+x, 0.0f+y, +z);
+		glEnd();
 	
-	glBegin(GL_QUADS);
-		glNormal3f(0.0f, 1.0f, 0.0f);
-		glVertex3f(10.0f+x, 10.0f+y, -15.0f+z);
-		glVertex3f(10.0f+x, 10.0f+y, -25.0f+z);
-		glVertex3f(0.0f+x, 10.0f+y, -25.0f+z);		 //CARA SUPERIOR
-		glVertex3f(0.0f+x, 10.0f+y, -15.0f+z);
-	glEnd();
+		glBegin(GL_QUADS);
+			glNormal3f(0.0f, 1.0f, 0.0f);
+			glVertex3f(10.0f+x, 10.0f+y, +z);
+			glVertex3f(10.0f+x, 10.0f+y, -10.0f+z);
+			glVertex3f(0.0f+x, 10.0f+y, -10.0f+z);		 //CARA SUPERIOR
+			glVertex3f(0.0f+x, 10.0f+y, +z);
+		glEnd();
 
-	glBegin(GL_QUADS);
-		glNormal3f(0.0f, -1.0f, 0.0f);
-		glVertex3f(0.0f+x, 0.0f+y, -15.0f+z);
-		glVertex3f(0.0f+x, 0.0f+y, -25.0f+z);	     // CARA INFERIOR
-		glVertex3f(10.0f+x, 0.0f+y, -25.0f+z);
-		glVertex3f(10.0f+x, 0.0f+y, -15.0f+z);
-	glEnd();
+		glBegin(GL_QUADS);
+			glNormal3f(0.0f, -1.0f, 0.0f);
+			glVertex3f(0.0f+x, 0.0f+y, +z);
+			glVertex3f(0.0f+x, 0.0f+y, -10.0f+z);	     // CARA INFERIOR
+			glVertex3f(10.0f+x, 0.0f+y, -10.0f+z);
+			glVertex3f(10.0f+x, 0.0f+y, +z);
+		glEnd();
+	glPopMatrix();
 }
 
 void dibujaEscenario()
@@ -2531,14 +2556,20 @@ void dibujaEscenario()
 
 	//FONDO PARTE 1
 
-	bloque(0, 0, 0, 3, 2, 4, 0.2);
-	bloque(10, 0, 0, 4, 3, 6, 0.3);
-	bloque(20, -10, 0, 2, 4, 5, 0.6);
-	bloque(30, -10, 0, 3, 4, 2, -0.1);
+	bloque(0, 0, 0, 1, 1);
+	bloque(10, 0, 0, 1, 1);
+	bloque(20, -10, 0, 1, 1);
+	bloque(30, -10, 0, 1, 1);
+	bloque(20, 0, 0, 0.5, 3);
+	bloque(0, 30, 0, 0.5, 2);
+	bloque(20, 30, 0, 0.5, 1);
+	bloque(20, 40, 0, 0.5, 1);
+	bloque(30, 30, 0, 0.5, 2);
+	bloque(40, -10, 0, 0.6, 4);
 
 	for (int i = 1; i < 30;i++)
 		for (int j = 1; j < 30; j++){
-			bloque(i*10, j*10, -80, 1, 5, 5, 0.0);
+			bloque(i*10-60, j*10-100, -80, 1, 1);
 		}
 
 
