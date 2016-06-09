@@ -883,47 +883,112 @@ void dibujaPlataforma()
 
 /**********************************************************MIS FUNCIONES ABNER!!!!!!!!! ***********************************************************************************************************/
 //EN LOS PARÁMETROS SOLO PASEN EL ORIGEN DE LA FIGURA Y LISTO. EN EL CASO DE LA CALAQUITA LE PASAN TAMBIÉN EL TAMAÑO 
-void dibujaCalaquita(float size,float origenX, float origenY, float origenZ)
-{
-	//Dibuja el marco negro primero
-	glColor3f(0.2,0.2,0.2);
-	glBegin(GL_QUADS);
-		glVertex3f(origenX,origenY,origenZ);
-		glVertex3f(origenX, origenY - size, origenZ);
-		glVertex3f(origenX + size, origenY - size, origenZ);
-		glVertex3f(origenX + size, origenY, origenZ);
+void dibujaCono(int color)
+ {
+	 if(color == 1)
+		 glColor3f(0.44, 0.33, 0.16);
+	 else if(color == 2)
+		 glColor3f(0.83,0.33,0.00);
+    glBegin(GL_TRIANGLES);
+    for (int k=0;k<=360;k+=5){
+      //glColor3f(0.0,0.0,1.0);
+      glVertex3f(0,0,1);
+      //glColor3f(0.0,1.0,1.0);
+      glVertex3f(cos(k),sin(k),0);
+      //glColor3f(1.0,0.0,0.0);
+      glVertex3f(cos(k+5),sin(k+5),0);
+    }
+    glEnd();
+
+    /* bottom circle */ 
+    /* rotate back */
+    glRotated(90,1,0,0);
+    glBegin(GL_TRIANGLES);
+    for (int k=0;k<=360;k+=5) {
+      //glColor3f(1.0,0.0,0.0);
+      glVertex3f(0,0,0);
+      //glColor3f(1.0,0.0,1.0);
+      glVertex3f(cos(k),0,sin(k));
+      //glColor3f(1.0,1.0,0.0);
+      glVertex3f(cos(k+5),0,sin(k+5));
+	}
 	glEnd();
+ }
 
-	//Dentro del marco se dibuja la calaquita
-	//Cabeza de la calaca
-	int triangulos = 50;
-	GLfloat twicePI = 2 * PI;
-	float centerX = origenX + size/2;
-	float centerY = origenY - size/2;
-	float radio = size/2 - 1;
+ void dibujaAntorcha3D(float origenX, float origenY, float origenZ)
+ {
 
-	glColor3f(1,1,1);
-	glBegin(GL_TRIANGLE_FAN);
-	glVertex2f(centerX, centerY);
-		for(int i = 0; i <= triangulos; i++)
-		{
-			glVertex2f(centerX + (radio * cos(i * twicePI / triangulos)), centerY + (radio * sin(i * twicePI / triangulos)));
-		}
-	glEnd();
+	 //Llamitas
+	 //glColor3f(1,1,1);
 
-	//Dibujar ojos
-	//Ojo izquierdo
+	 //Base de la antorcha
+	 glPushMatrix();
+		glTranslatef(origenX,origenY, origenZ);
+		glRotatef(90,1,0,0);
+		glScalef(3,1,5);
+		dibujaCono(1);
+	 glPopMatrix();
+
+	 //Llamitas
+	 int nuevoOrigen = origenX - 2;
+	 for(int i = 0; i < 5; i++)
+	 {
+		glPushMatrix();
+			glTranslatef(nuevoOrigen + i,origenY, origenZ);
+			glRotatef(-90,1,0,0);
+			dibujaCono(2);
+		glPopMatrix();
+	 }
+	 
+ }
+
+ void drawSphere(double r, int lats, int longs) {
+       int i, j;
+       for(i = 0; i <= lats; i++) {
+          double lat0 = PI * (-0.5 + (double) (i - 1) / lats);
+          double z0  = sin(lat0);
+          double zr0 =  cos(lat0);
+    
+          double lat1 = PI * (-0.5 + (double) i / lats);
+           double z1 = sin(lat1);
+          double zr1 = cos(lat1);
+    
+          glBegin(GL_QUAD_STRIP);
+          for(j = 0; j <= longs; j++) {
+              double lng = 2 * PI * (double) (j - 1) / longs;
+              double x = cos(lng);
+              double y = sin(lng);
+    
+              glNormal3f(x * zr0, y * zr0, z0);
+              glVertex3f(x * zr0, y * zr0, z0);
+              glNormal3f(x * zr1, y * zr1, z1);
+             glVertex3f(x * zr1, y * zr1, z1);
+          }
+         glEnd();
+      }
+  }
+
+ void dibujaCalaquita3D(float origenX, float origenY, float origenZ)
+ {
+	 //Cabeza
+	 glPushMatrix();
+		glTranslatef(origenX, origenY, origenZ);
+		glScalef(3,3,3);
+		drawSphere(10,50,50);
+	 glPopMatrix();
+
+	 //Ojo izquierdo
 	float radX = 1.0;
 	float radY = 0.6;
 	glColor3f(0.2,0.2,0.2);
 	glPushMatrix();
-		glTranslatef(5.5,3,0);
+		glTranslatef(origenX - 1.2,origenY + 1,0);
 		glRotatef(-60,0,0,1);
 		glBegin(GL_TRIANGLE_FAN);
 			for(int i = 0; i < 360; i++)
 			{
 				float rad = i * (PI/180);
-				glVertex2f(centerX + cos(rad)*radX, centerY + sin(rad)*radY);
+				glVertex3f(0 + cos(rad)*radX, 0 + sin(rad)*radY, origenZ);
 			}
 		glEnd();
 	glPopMatrix();
@@ -931,92 +996,36 @@ void dibujaCalaquita(float size,float origenX, float origenY, float origenZ)
 	//Ojo derecho
 	glColor3f(0.2,0.2,0.2);
 	glPushMatrix();
-		glTranslatef(-0.39,-5.529,0);
+		glTranslatef(origenX + 1.2, origenY + 1,0);
 		glRotatef(60,0,0,1);
 		glBegin(GL_TRIANGLE_FAN);
 			for(int i = 0; i < 360; i++)
 			{
 				float rad = i * (PI/180);
-				glVertex2f(centerX + cos(rad)*radX, centerY + sin(rad)*radY);
+				glVertex3f(0 + cos(rad)*radX, 0 + sin(rad)*radY, origenZ);
 			}
 		glEnd();
 	glPopMatrix();
 
 	//Boca
-	triangulos = 50;
-	twicePI = 2 * PI;
-	centerX = origenX + size/2;
-	centerY = origenY - size/2;
-	radio = size/2 - 2.7;
+	int triangulos = 50;
+	float twicePI = 2 * PI;
+	float centerX = origenX; //+ size/2;
+	float centerY = origenY; //- size/2;
+	float radio = /*size/2 -*/ 2.2;
 
 	glColor3f(0.2,0.2,0.2);
 	glPushMatrix();
-		glTranslatef(10,-10.5,0);
+		glTranslatef(centerX, centerY - 0.5,0);
 		glRotatef(180,0,0,1);
 		glBegin(GL_TRIANGLE_FAN);
-			glVertex2f(centerX, centerY);
+			//glVertex2f(0, 0);
 				for(int i = 0; i <= triangulos; i++)
 				{
-					glVertex2f(centerX + (radio * cos(i * PI / triangulos)), centerY + (radio * sin(i * PI / triangulos)));
+					glVertex3f(0 + (radio * cos(i * PI / triangulos)), 0 + (radio * sin(i * PI / triangulos)), origenZ);
 				}
 		glEnd();
 	glPopMatrix();
-
-	glColor3f(1,1,1);
-}
-
- void dibujaAntorcha(float origenX, float origenY, float origenZ)
- {
-	glColor3f(0.44, 0.33, 0.16);
-	glBegin(GL_QUADS);
-		glVertex3f(origenX,origenY,0);
-		glVertex3f(origenX + 2.5,origenY - 5,0);
-		glVertex3f(origenX + 5,origenY,0);
-		glVertex3f(origenX + 5,origenY,0);
-		glEnd();
-
-	//Llamas
-		for(int i = 0; i < 5; i++)
-		{
-			//Llamas primeras
-			glColor3f(0.98, 0.41, 0.05);
-			float nuevoOrigen = origenX + i;
-			glBegin(GL_QUADS);
-				glVertex3f(nuevoOrigen,origenY,0);
-				glVertex3f(nuevoOrigen + 1,origenY,0);
-				glVertex3f(nuevoOrigen,origenY + 2,0);
-				glVertex3f(nuevoOrigen,origenY + 2,0);
-			glEnd();
-
-			//Llamitas amarillas
-			glColor3f(0.95,0.61, 0.07);
-			glBegin(GL_QUADS);
-				glVertex3f(nuevoOrigen,origenY,0);
-				glVertex3f(nuevoOrigen + 0.5,origenY,0);
-				glVertex3f(nuevoOrigen,origenY + 1,0);
-				glVertex3f(nuevoOrigen,origenY + 1,0);
-			glEnd();
-
-			//llamitas blancas
-			glColor3f(0.8,0.8,0.8);
-			glBegin(GL_QUADS);
-				glVertex3f(nuevoOrigen,origenY,0);
-				glVertex3f(nuevoOrigen + 0.2,origenY,0);
-				glVertex3f(nuevoOrigen,origenY + 0.3,0);
-				glVertex3f(nuevoOrigen,origenY + 0.3,0);
-			glEnd();
-
-			//Llamas invertidas
-			float origenInvertido = 5 - i;
-			glColor3f(0.92, 0.58, 0.20);
-			glBegin(GL_QUADS);
-				glVertex3f(origenInvertido,origenY,0);
-				glVertex3f(origenInvertido,origenY + 2,0);
-				glVertex3f(origenInvertido - 1,origenY,0);
-				glVertex3f(origenInvertido - 1,origenY,0);
-			glEnd();
-		}
-		glColor3f(1,1,1);
  }
 
 void dibujaCilindro(float radio, int lados, float altura, int modoRender)
